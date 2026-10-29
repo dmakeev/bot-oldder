@@ -1,6 +1,8 @@
 """Date calculation service for PROсрочка bot."""
-import pytz
 from datetime import datetime, timedelta
+
+import pytz
+
 from .calendar import CalendarService
 
 

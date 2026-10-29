@@ -1,5 +1,6 @@
 """Configuration for the PROсрочка bot."""
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()

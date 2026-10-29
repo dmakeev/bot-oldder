@@ -1,5 +1,6 @@
 """Reminder service for PROсрочка bot."""
 import aiosqlite
+
 from ..config import DB_PATH
 
 
@@ -82,6 +83,15 @@ class ReminderService:
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
                 "UPDATE reminders SET status = 'cancelled' WHERE id = ?",
+                (reminder_id,)
+            )
+            await db.commit()
+
+    async def mark_reminder_muted(self, reminder_id):
+        """Mark a reminder as muted (don't remind again)."""
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                "UPDATE reminders SET status = 'muted' WHERE id = ?",
                 (reminder_id,)
             )
             await db.commit()

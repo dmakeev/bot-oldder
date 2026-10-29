@@ -1,7 +1,6 @@
 """Calendar service for PROсрочка bot."""
 import json
 import os
-from datetime import datetime
 
 CALENDAR_FILE = "bot/data/calendar.json"
 

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROсрочка — Отчет о тестировании</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        .summary { background: #ecf0f1; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .summary h2 { margin-top: 0; }
+        .stat { display: inline-block; margin: 0 20px; text-align: center; }
+        .stat-value { font-size: 2em; font-weight: bold; color: #27ae60; }
+        .stat-label { font-size: 0.9em; color: #666; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #3498db; color: white; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        .pass { color: #27ae60; font-weight: bold; }
+        .coverage-bar { background: #ecf0f1; border-radius: 4px; height: 20px; overflow: hidden; }
+        .coverage-fill { height: 100%; background: #27ae60; border-radius: 4px; }
+        .file-name { font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>🤖 PROсрочка — Отчет о тестировании</h1>
+    
+    <div class="summary">
+        <h2>Итоги</h2>
+        <div class="stat">
+            <div class="stat-value">44</div>
+            <div class="stat-label">Тестов пройдено</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">84%</div>
+            <div class="stat-label">Покрываемость</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Провалов</div>
+        </div>
+    </div>
+
+    <h2>Покрытие по файлам</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Файл</th>
+                <th>Строк</th>
+                <th>Не покрыто</th>
+                <th>Покрытие</th>
+                <th>График</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="file-name">bot/config.py</td>
+                <td>6</td>
+                <td>0</td>
+                <td>100%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 100%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/handlers/commands.py</td>
+                <td>9</td>
+                <td>0</td>
+                <td>100%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 100%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/handlers/projects.py</td>
+                <td>8</td>
+                <td>0</td>
+                <td>100%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 100%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/handlers/reminders.py</td>
+                <td>20</td>
+                <td>0</td>
+                <td>100%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 100%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/utils/formatting.py</td>
+                <td>21</td>
+                <td>0</td>
+                <td>100%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 100%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/utils/keyboards.py</td>
+                <td>9</td>
+                <td>0</td>
+                <td>100%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 100%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/services/reminders.py</td>
+                <td>32</td>
+                <td>3</td>
+                <td>91%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 91%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/services/calendar.py</td>
+                <td>42</td>
+                <td>4</td>
+                <td>90%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 90%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/services/projects.py</td>
+                <td>26</td>
+                <td>3</td>
+                <td>88%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 88%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/services/date_calc.py</td>
+                <td>33</td>
+                <td>2</td>
+                <td>94%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 94%"></div></div></td>
+            </tr>
+            <tr>
+                <td class="file-name">bot/handlers/__init__.py</td>
+                <td>7</td>
+                <td>0</td>
+                <td>100%</td>
+                <td><div class="coverage-bar"><div class="coverage-fill" style="width: 100%"></div></div></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Запуск тестов</h2>
+    <pre style="background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 8px;"><code>source .venv/bin/activate
+pytest tests/ --cov=bot --cov-report=term-missing</code></pre>
+
+    <h2>Структура тестов</h2>
+    <ul>
+        <li><strong>test_calendar.py</strong> — проверка рабочих/выходных дней</li>
+        <li><strong>test_date_calc.py</strong> — базовые расчеты дат</li>
+        <li><strong>test_date_calc_extended.py</strong> — расширенные расчеты с праздниками</li>
+        <li><strong>test_projects.py</strong> — CRUD операций с проектами</li>
+        <li><strong>test_reminders.py</strong> — создание и управление напоминаниями</li>
+        <li><strong>test_keyboards.py</strong> — создание клавиатур</li>
+        <li><strong>test_formatting.py</strong> — форматирование текстов</li>
+        <li><strong>test_handlers.py</strong> — обработчики команд</li>
+        <li><strong>test_reminder_handlers.py</strong> — обработчики напоминаний</li>
+        <li><strong>test_setup.py</strong> — настройка обработчиков</li>
+    </ul>
+
+    <p><em>Сгенерировано: 29 октября 2026</em></p>
+</body>
+</html>

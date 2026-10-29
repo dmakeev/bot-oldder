@@ -23,10 +23,21 @@ async def test_start_command():
 @pytest.mark.asyncio
 async def test_projects_command_empty():
     """Test /projects command when no projects."""
-    from bot.handlers.commands import projects_command
+    from bot.handlers.commands import projects_command, project_service
+
+    # Use temp database
+    import tempfile
+    import os
+    fd, path = tempfile.mkstemp(suffix='.db')
+    os.close(fd)
+    project_service.db_path = path
+
+    # Initialize DB
+    await project_service.init_db()
 
     update = MagicMock()
     update.message = MagicMock()
+    update.message.chat_id = 123
     update.message.reply_text = AsyncMock()
     context = MagicMock()
 
@@ -34,7 +45,11 @@ async def test_projects_command_empty():
 
     update.message.reply_text.assert_called_once()
     call_args = update.message.reply_text.call_args
-    assert "Нет" in call_args[0][0] or "Пока" in call_args[0][0]
+    assert "Нет" in call_args[0][0]
+
+    # Cleanup
+    if os.path.exists(path):
+        os.remove(path)
 
 
 @pytest.mark.asyncio
