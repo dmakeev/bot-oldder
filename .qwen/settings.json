@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Agent(researcher)",
+      "WebFetch(python-telegram-bot.org)",
+      "WebFetch(python-telegram-bot.readthedocs.io)",
+      "WebFetch(raw.githubusercontent.com)",
+      "WebFetch(www.google.com)",
+      "WebFetch(api.github.com)",
+      "WebFetch(github.com)",
+      "Bash(mkdir *)",
+      "Bash(pip install *)",
+      "Bash(pytest *)",
+      "Bash(touch *)",
+      "Bash(python *)"
+    ]
+  },
+  "$version": 4
+}
