@@ -1,6 +1,11 @@
 """Reminder handlers for PROсрочка bot."""
 from telegram.ext import CallbackQueryHandler
 
+from ..services.reminders import ReminderService
+
+
+reminder_service = ReminderService()
+
 
 async def reminder_done_handler(update, context):
     """Handle 'Done' button."""
@@ -8,7 +13,7 @@ async def reminder_done_handler(update, context):
     await query.answer()
 
     reminder_id = int(query.data.replace("done_", ""))
-    # TODO: Mark reminder as done
+    await reminder_service.mark_reminder_done(reminder_id)
     await query.edit_message_text("✅ Выполнено")
 
 
@@ -18,7 +23,7 @@ async def reminder_cancel_handler(update, context):
     await query.answer()
 
     reminder_id = int(query.data.replace("cancel_", ""))
-    # TODO: Mark reminder as cancelled
+    await reminder_service.mark_reminder_cancelled(reminder_id)
     await query.edit_message_text("❌ Отменено")
 
 
@@ -28,7 +33,7 @@ async def reminder_mute_handler(update, context):
     await query.answer()
 
     reminder_id = int(query.data.replace("mute_", ""))
-    # TODO: Mark reminder as muted
+    await reminder_service.mark_reminder_muted(reminder_id)
     await query.edit_message_text("🔕 Больше не напоминать")
 
 

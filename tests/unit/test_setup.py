@@ -26,8 +26,8 @@ def test_setup_command_handlers():
     app = MagicMock()
     setup_commands(app)
 
-    # Should register start and projects commands
-    assert app.add_handler.call_count == 2
+    # Should register start, projects, and table commands
+    assert app.add_handler.call_count == 3
 
 
 def test_setup_project_handlers():

@@ -1,5 +1,6 @@
 """Project management service for PROсрочка bot."""
 import aiosqlite
+
 from ..config import DB_PATH
 
 
@@ -17,22 +18,36 @@ class ProjectService:
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     chat_id INTEGER NOT NULL,
                     name TEXT NOT NULL,
-                    case_number TEXT NOT NULL,
+                    case_number TEXT,
                     type TEXT NOT NULL,
                     procedures TEXT,
+                    reminder_text TEXT,
+                    reminder_date TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     active BOOLEAN DEFAULT TRUE
                 )
             """)
+
+            # Add columns if they don't exist (for existing databases)
+            try:
+                await db.execute("ALTER TABLE projects ADD COLUMN reminder_text TEXT")
+            except aiosqlite.OperationalError:
+                pass
+
+            try:
+                await db.execute("ALTER TABLE projects ADD COLUMN reminder_date TEXT")
+            except aiosqlite.OperationalError:
+                pass
+
             await db.commit()
 
-    async def create_project(self, chat_id, name, case_number, project_type, procedures=None):
+    async def create_project(self, chat_id, name, case_number=None, project_type="bankruptcy", procedures=None, reminder_text=None, reminder_date=None):
         """Create a new project."""
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute(
-                """INSERT INTO projects (chat_id, name, case_number, type, procedures)
-                   VALUES (?, ?, ?, ?, ?)""",
-                (chat_id, name, case_number, project_type, procedures)
+                """INSERT INTO projects (chat_id, name, case_number, type, procedures, reminder_text, reminder_date)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                (chat_id, name, case_number, project_type, procedures, reminder_text, reminder_date)
             )
             await db.commit()
             return cursor.lastrowid
