@@ -1,8 +1,8 @@
 """Unit tests for bot setup."""
-import pytest
 from unittest.mock import MagicMock
-from bot.services.date_calc import DateCalculator
+
 from bot.services.calendar import CalendarService
+from bot.services.date_calc import DateCalculator
 
 
 def test_setup_handlers():

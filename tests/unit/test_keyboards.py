@@ -1,10 +1,9 @@
 """Unit tests for keyboard helpers."""
-import pytest
 from bot.utils.keyboards import (
-    make_reminder_keyboard,
-    make_project_type_keyboard,
     make_hearing_result_keyboard,
-    make_meeting_result_keyboard
+    make_meeting_result_keyboard,
+    make_project_type_keyboard,
+    make_reminder_keyboard,
 )
 
 

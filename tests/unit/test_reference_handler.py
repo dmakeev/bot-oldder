@@ -1,6 +1,8 @@
 """Unit tests for reference search handler."""
+from unittest.mock import AsyncMock, MagicMock
+
 import pytest
-from unittest.mock import MagicMock, AsyncMock
+
 from bot.handlers.reference import reference_search
 
 

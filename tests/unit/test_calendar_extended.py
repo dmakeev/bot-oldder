@@ -1,6 +1,8 @@
 """Extended unit tests for calendar service."""
-import pytest
 from datetime import datetime
+
+import pytest
+
 from bot.services.calendar import CalendarService
 
 

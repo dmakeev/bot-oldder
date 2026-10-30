@@ -1,6 +1,8 @@
 """Additional unit tests for date calculation."""
+from datetime import UTC, datetime
+
 import pytest
-from datetime import datetime
+
 from bot.services.date_calc import DateCalculator
 
 
@@ -21,8 +23,7 @@ def test_get_now(calculator):
     # Should be a datetime with timezone
     assert now.tzinfo is not None
     # Should be close to current time (within 1 hour)
-    from datetime import timezone
-    utc_now = datetime.now(timezone.utc)
+    utc_now = datetime.now(UTC)
     diff = abs((now - utc_now).total_seconds())
     # Moscow is UTC+3, so difference should be around 3 hours (10800 seconds)
     assert diff < 20000

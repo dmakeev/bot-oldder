@@ -1,5 +1,10 @@
 """Project handlers for PROсрочка bot."""
-from telegram.ext import CallbackQueryHandler, MessageHandler, filters, ConversationHandler
+from telegram.ext import (
+    CallbackQueryHandler,
+    ConversationHandler,
+    MessageHandler,
+    filters,
+)
 
 from ..services.projects import ProjectService
 from ..services.reminders import ReminderService
@@ -42,7 +47,7 @@ async def case_number_handler(update, context):
     """Handle case number input and create project."""
     case_number = update.message.text
 
-    project_id = await project_service.create_project(
+    await project_service.create_project(
         chat_id=update.message.chat_id,
         name=context.user_data['project_name'],
         case_number=case_number,
@@ -82,7 +87,7 @@ async def custom_date_handler(update, context):
         date_str = update.message.text
         reminder_date = datetime.strptime(date_str, "%d.%m.%Y")
         # Create project
-        project_id = await project_service.create_project(
+        await project_service.create_project(
             chat_id=update.message.chat_id,
             name=context.user_data['project_name'],
             project_type="custom",

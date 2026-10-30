@@ -1,11 +1,10 @@
 """Command handlers for PROсрочка bot."""
 from telegram.ext import CommandHandler
 
-from ..services.projects import ProjectService
 from ..services.export import format_project_table
-from ..utils.keyboards import make_project_type_keyboard
+from ..services.projects import ProjectService
 from ..utils.formatting import format_project_list
-
+from ..utils.keyboards import make_project_type_keyboard
 
 project_service = ProjectService()
 

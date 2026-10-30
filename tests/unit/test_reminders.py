@@ -1,8 +1,9 @@
 """Unit tests for reminder logic."""
-import pytest
 import os
 import tempfile
 from datetime import datetime
+
+import pytest
 
 
 @pytest.fixture
@@ -37,7 +38,10 @@ async def test_create_reminder(temp_db):
         scheduled_at=datetime(2026, 11, 8)
     )
 
-    assert reminder_id > 0
+    # UUID v4 format: 36 chars with hyphens
+    assert isinstance(reminder_id, str)
+    assert len(reminder_id) == 36
+    assert reminder_id.count('-') == 4
 
 
 @pytest.mark.asyncio

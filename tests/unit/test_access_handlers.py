@@ -1,13 +1,15 @@
 """Unit tests for access control handlers."""
-import pytest
-import tempfile
 import os
-from unittest.mock import MagicMock, patch, AsyncMock
+import tempfile
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+
 from bot.handlers.access import (
     approve_user_handler,
     deny_user_handler,
-    list_users_handler,
     handle_start_with_access,
+    list_users_handler,
 )
 from bot.services.access import AccessService
 
@@ -17,6 +19,8 @@ async def test_approve_user_handler():
     """Test approve user callback handler."""
     query = MagicMock()
     query.data = "approve_123"
+    query.from_user = MagicMock()
+    query.from_user.id = 123456  # Admin user ID from conftest
     query.answer = AsyncMock()
     query.edit_message_text = AsyncMock()
     update = MagicMock()
@@ -48,6 +52,8 @@ async def test_deny_user_handler():
     """Test deny user callback handler."""
     query = MagicMock()
     query.data = "deny_123"
+    query.from_user = MagicMock()
+    query.from_user.id = 123456  # Admin user ID from conftest
     query.answer = AsyncMock()
     query.edit_message_text = AsyncMock()
     update = MagicMock()
@@ -79,6 +85,8 @@ async def test_list_users_handler_empty():
     """Test listing users when no users exist."""
     update = MagicMock()
     update.message = MagicMock()
+    update.message.from_user = MagicMock()
+    update.message.from_user.id = 123456  # Admin user ID from conftest
     update.message.reply_text = AsyncMock()
 
     with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as f:
@@ -103,6 +111,8 @@ async def test_list_users_handler_with_users():
     """Test listing users with existing users."""
     update = MagicMock()
     update.message = MagicMock()
+    update.message.from_user = MagicMock()
+    update.message.from_user.id = 123456  # Admin user ID from conftest
     update.message.reply_text = AsyncMock()
 
     with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as f:

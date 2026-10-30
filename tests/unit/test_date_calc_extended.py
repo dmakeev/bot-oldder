@@ -1,8 +1,9 @@
 """Extended unit tests for date calculation with holidays."""
+from datetime import datetime
+
 import pytest
-from datetime import datetime, timedelta
+
 from bot.services.date_calc import DateCalculator
-from bot.services.calendar import CalendarService
 
 
 @pytest.fixture

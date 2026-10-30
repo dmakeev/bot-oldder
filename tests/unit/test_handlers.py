@@ -1,6 +1,7 @@
 """Unit tests for bot handlers."""
+from unittest.mock import AsyncMock, MagicMock
+
 import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
 
 
 @pytest.mark.asyncio
@@ -23,11 +24,12 @@ async def test_start_command():
 @pytest.mark.asyncio
 async def test_projects_command_empty():
     """Test /projects command when no projects."""
-    from bot.handlers.commands import projects_command, project_service
+    import os
 
     # Use temp database
     import tempfile
-    import os
+
+    from bot.handlers.commands import project_service, projects_command
     fd, path = tempfile.mkstemp(suffix='.db')
     os.close(fd)
     project_service.db_path = path

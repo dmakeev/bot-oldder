@@ -1,7 +1,6 @@
 """Reference book service — lookup deadline rules by keyword."""
 import json
 import os
-from typing import List, Dict, Optional
 
 # Load reference data
 REF_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'reference.json')
@@ -15,7 +14,7 @@ def get_version() -> str:
     return _ref_data.get('version', 'unknown')
 
 
-def search(query: str) -> List[Dict]:
+def search(query: str) -> list[dict]:
     """Search reference by keyword.
 
     Matches against action, law, and deadline fields.
@@ -47,7 +46,7 @@ def search(query: str) -> List[Dict]:
     return results
 
 
-def get_item(item_id: str) -> Optional[Dict]:
+def get_item(item_id: str) -> dict | None:
     """Get a specific reference item by ID."""
     for item in _ref_data['items']:
         if item['id'] == item_id:

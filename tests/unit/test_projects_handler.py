@@ -1,16 +1,17 @@
 """Unit tests for project handlers."""
-import pytest
-import tempfile
 import os
-from unittest.mock import MagicMock, AsyncMock, patch
-from datetime import datetime
+import tempfile
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+
 from bot.handlers.projects import (
-    project_type_handler,
-    project_name_handler,
     case_number_handler,
+    custom_date_handler,
     custom_name_handler,
     custom_text_handler,
-    custom_date_handler,
+    project_name_handler,
+    project_type_handler,
 )
 from bot.services.projects import ProjectService
 
@@ -29,7 +30,7 @@ async def test_project_type_handler_bankruptcy():
     context.user_data = {}
 
     with patch("bot.handlers.projects.project_service"):
-        result = await project_type_handler(update, context)
+        await project_type_handler(update, context)
 
     assert context.user_data['project_type'] == 'bankruptcy'
     query.answer.assert_called_once()
@@ -50,7 +51,7 @@ async def test_project_type_handler_custom():
     context.user_data = {}
 
     with patch("bot.handlers.projects.project_service"):
-        result = await project_type_handler(update, context)
+        await project_type_handler(update, context)
 
     assert context.user_data['project_type'] == 'custom'
     query.edit_message_text.assert_called_once_with("Введите название напоминания:")
@@ -68,7 +69,7 @@ async def test_project_name_handler():
     context.user_data = {}
 
     with patch("bot.handlers.projects.project_service"):
-        result = await project_name_handler(update, context)
+        await project_name_handler(update, context)
 
     assert context.user_data['project_name'] == "Дело Иванов"
     update.message.reply_text.assert_called_once_with(
@@ -97,7 +98,7 @@ async def test_case_number_handler():
         await service.init_db()
 
         with patch("bot.handlers.projects.project_service", service):
-            result = await case_number_handler(update, context)
+            await case_number_handler(update, context)
 
         # Check project was created
         projects = await service.get_projects_by_chat(123)
@@ -121,7 +122,7 @@ async def test_custom_name_handler():
     context.user_data = {}
 
     with patch("bot.handlers.projects.project_service"):
-        result = await custom_name_handler(update, context)
+        await custom_name_handler(update, context)
 
     assert context.user_data['project_name'] == "Мой срок"
     update.message.reply_text.assert_called_once_with("Введите текст напоминания:")
@@ -139,7 +140,7 @@ async def test_custom_text_handler():
     context.user_data = {}
 
     with patch("bot.handlers.projects.project_service"):
-        result = await custom_text_handler(update, context)
+        await custom_text_handler(update, context)
 
     assert context.user_data['reminder_text'] == "Предоставить документы"
     update.message.reply_text.assert_called_once()
@@ -169,7 +170,7 @@ async def test_custom_date_handler_success():
         await service.init_db()
 
         with patch("bot.handlers.projects.project_service", service):
-            result = await custom_date_handler(update, context)
+            await custom_date_handler(update, context)
 
         projects = await service.get_projects_by_chat(123)
         assert len(projects) == 1
@@ -195,7 +196,7 @@ async def test_custom_date_handler_invalid_date():
     }
 
     with patch("bot.handlers.projects.project_service"):
-        result = await custom_date_handler(update, context)
+        await custom_date_handler(update, context)
 
     update.message.reply_text.assert_called_once_with(
         "Неверный формат даты. Используйте ДД.ММ.ГГГГ"

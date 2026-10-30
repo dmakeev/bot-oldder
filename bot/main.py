@@ -3,17 +3,18 @@ import logging
 from datetime import datetime, time, timedelta
 
 import pytz
-from telegram.ext import ApplicationBuilder, JobQueue, CommandHandler
+from telegram.ext import ApplicationBuilder, CommandHandler, JobQueue
 
 from .config import ADMIN_USER_ID, BOT_TOKEN
 from .handlers import setup_handlers
-from .handlers.reference import reference_search
 from .handlers.access import handle_start_with_access, setup_access_handlers
+from .handlers.reference import reference_search
+from .services.access import AccessService
 from .services.calendar import CalendarService
 from .services.date_calc import DateCalculator
 from .services.reminders import ReminderService
-from .services.access import AccessService
 from .utils.formatting import format_today_summary
+from .utils.rate_limiter import RateLimiter
 
 # Set up logging
 logging.basicConfig(
@@ -24,6 +25,9 @@ logger = logging.getLogger(__name__)
 
 # Moscow timezone
 MSK = pytz.timezone("Europe/Moscow")
+
+# Rate limiter: 10 requests per minute per user
+rate_limiter = RateLimiter(max_requests=10, window_seconds=60)
 
 
 async def send_daily_reminder(context):

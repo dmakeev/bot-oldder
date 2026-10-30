@@ -1,12 +1,10 @@
 """Export service for PROсрочка bot."""
 import io
-from datetime import datetime
-from typing import List, Dict
 
 import xlsxwriter
 
 
-def export_to_excel(data: List[Dict], filename: str) -> bytes:
+def export_to_excel(data: list[dict], filename: str) -> bytes:
     """Export data to Excel file.
 
     Args:
@@ -34,7 +32,7 @@ def export_to_excel(data: List[Dict], filename: str) -> bytes:
     return output.getvalue()
 
 
-def format_project_table(projects: List[Dict]) -> str:
+def format_project_table(projects: list[dict]) -> str:
     """Format projects as a text table."""
     if not projects:
         return "Нет проектов."

@@ -1,5 +1,4 @@
 """Unit tests for export service."""
-import pytest
 from bot.services.export import format_project_table
 
 

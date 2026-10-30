@@ -1,9 +1,12 @@
 """Access control handlers."""
-from telegram.ext import CommandHandler, CallbackQueryHandler
+import logging
 
-from ..services.access import AccessService
+from telegram.ext import CallbackQueryHandler, CommandHandler
+
 from ..config import ADMIN_USER_ID
+from ..services.access import AccessService
 
+logger = logging.getLogger(__name__)
 
 access_service = AccessService()
 
@@ -43,14 +46,19 @@ async def handle_start_with_access(update, context):
                 f"📬 Запрос на доступ от {update.message.from_user.first_name} "
                 f"(ID: {user_id})"
             )
-        except Exception as e:
-            print(f"Error notifying admin: {e}")
+        except Exception as e:  # noqa: BLE001
+            logger.error(f"Error notifying admin: {e}")
 
 
 async def approve_user_handler(update, context):
     """Handle [Approve] button."""
     query = update.callback_query
     await query.answer()
+
+    # Verify caller is admin
+    if query.from_user.id != ADMIN_USER_ID:
+        await query.edit_message_text("❌ Только администратор может одобрить доступ.")
+        return
 
     user_id = query.data.replace("approve_", "")
     user_id = int(user_id)
@@ -64,6 +72,11 @@ async def deny_user_handler(update, context):
     query = update.callback_query
     await query.answer()
 
+    # Verify caller is admin
+    if query.from_user.id != ADMIN_USER_ID:
+        await query.edit_message_text("❌ Только администратор может отклонить доступ.")
+        return
+
     user_id = query.data.replace("deny_", "")
     user_id = int(user_id)
 
@@ -73,6 +86,11 @@ async def deny_user_handler(update, context):
 
 async def list_users_handler(update, context):
     """Handle /users command — show all users."""
+    # Verify caller is admin
+    if update.message.from_user.id != ADMIN_USER_ID:
+        await update.message.reply_text("❌ Только администратор может просмотреть пользователей.")
+        return
+
     users = await access_service.get_all_users()
 
     if not users:
@@ -81,7 +99,7 @@ async def list_users_handler(update, context):
 
     text = "👥 Пользователи:\n\n"
     for user in users:
-        uid, chat_id, status, approved_by, approved_at = user
+        uid, chat_id, status, _approved_by, _approved_at = user
         status_text = {"pending": "⏳", "approved": "✅", "denied": "❌", "revoked": "🔒"}.get(status, status)
         text += f"{status_text} {uid} ({chat_id})\n"
 

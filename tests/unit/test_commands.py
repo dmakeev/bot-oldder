@@ -1,11 +1,13 @@
 """Unit tests for command handlers."""
-import pytest
-import tempfile
 import os
-from unittest.mock import MagicMock, AsyncMock, patch
+import tempfile
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+
 from bot.handlers.commands import (
-    start_command,
     projects_command,
+    start_command,
     table_command,
 )
 from bot.services.projects import ProjectService

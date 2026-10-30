@@ -1,7 +1,8 @@
 """Integration tests for bot startup."""
-import pytest
 import os
 import tempfile
+
+import pytest
 
 
 @pytest.fixture
