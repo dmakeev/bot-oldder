@@ -55,6 +55,4 @@ class CalendarService:
         if self.is_holiday(date):
             return False
         # Transfer day
-        if self.is_transfer_day(date):
-            return False
-        return True
+        return not self.is_transfer_day(date)

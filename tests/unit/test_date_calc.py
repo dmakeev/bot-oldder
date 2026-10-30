@@ -1,8 +1,9 @@
 """Unit tests for date calculation service."""
-import pytest
 from datetime import datetime
+
+import pytest
+
 from bot.services.date_calc import DateCalculator
-from bot.services.calendar import CalendarService
 
 
 @pytest.fixture

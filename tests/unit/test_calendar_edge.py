@@ -1,8 +1,6 @@
 """Edge case tests for calendar service."""
-import pytest
-import os
-import tempfile
 from datetime import datetime
+
 from bot.services.calendar import CalendarService
 
 

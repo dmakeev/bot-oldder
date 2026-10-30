@@ -1,6 +1,7 @@
 """User access control service."""
 import aiosqlite
-from ..config import ADMIN_USER_ID, DB_PATH
+
+from ..config import DB_PATH
 
 
 class AccessService:
@@ -26,20 +27,19 @@ class AccessService:
     async def request_access(self, user_id, chat_id=None):
         """Create a pending access request."""
         async with aiosqlite.connect(self.db_path) as db:
-            # Check if already exists
+            # Use INSERT OR IGNORE to prevent race conditions on concurrent requests
+            await db.execute(
+                "INSERT OR IGNORE INTO user_access (user_id, chat_id, status) VALUES (?, ?, 'pending')",
+                (user_id, chat_id)
+            )
+            await db.commit()
+
+            # Return the current status (either existing or newly created)
             cursor = await db.execute(
                 "SELECT status FROM user_access WHERE user_id = ?", (user_id,)
             )
             row = await cursor.fetchone()
-            if row:
-                return row[0]  # Already has a status
-
-            await db.execute(
-                "INSERT INTO user_access (user_id, chat_id, status) VALUES (?, ?, 'pending')",
-                (user_id, chat_id)
-            )
-            await db.commit()
-            return 'pending'
+            return row[0] if row else 'pending'
 
     async def approve_access(self, user_id, approved_by):
         """Approve user access."""

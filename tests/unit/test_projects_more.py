@@ -1,7 +1,8 @@
 """Additional unit tests for project service."""
-import pytest
 import os
 import tempfile
+
+import pytest
 
 
 @pytest.fixture

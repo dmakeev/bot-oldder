@@ -1,9 +1,8 @@
 """Unit tests for formatting helpers."""
-import pytest
 from bot.utils.formatting import (
-    format_reminder_text,
     format_project_list,
-    format_today_summary
+    format_reminder_text,
+    format_today_summary,
 )
 
 

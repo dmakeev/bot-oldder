@@ -1,5 +1,4 @@
 """Unit tests for reference service."""
-import pytest
 from bot.services import reference as ref_service
 
 

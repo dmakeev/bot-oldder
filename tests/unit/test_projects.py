@@ -1,8 +1,8 @@
 """Unit tests for project management."""
-import pytest
 import os
 import tempfile
-from datetime import datetime
+
+import pytest
 
 
 @pytest.fixture
@@ -31,7 +31,10 @@ async def test_create_project(temp_db):
         project_type="bankruptcy"
     )
 
-    assert project_id > 0
+    # UUID v4 format: 36 chars with hyphens
+    assert isinstance(project_id, str)
+    assert len(project_id) == 36
+    assert project_id.count('-') == 4
 
 
 @pytest.mark.asyncio
@@ -44,7 +47,7 @@ async def test_get_projects_by_chat(temp_db):
     await service.init_db()
 
     # Create project
-    project_id = await service.create_project(
+    await service.create_project(
         chat_id=123,
         name="Тестовое дело",
         case_number="А123-456/2026",

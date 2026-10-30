@@ -1,7 +1,7 @@
 """Unit tests for Excel export service."""
-import pytest
-import tempfile
 import os
+import tempfile
+
 from bot.services.export import export_to_excel, format_project_table
 
 
